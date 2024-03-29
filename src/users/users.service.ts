@@ -8,5 +8,16 @@ import { User } from 'src/schemas/User.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  createUser(createUserDto: CreateUserDto) {}
+  createUser(createUserDto: CreateUserDto) {
+    const user = new this.userModel(createUserDto);
+    return user.save();
+  }
+
+  getUsers() {
+    return this.userModel.find();
+  }
+
+  getUserById(id: string) {
+    return this.userModel.findById(id);
+  }
 }
