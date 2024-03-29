@@ -54,5 +54,5 @@ npm run start:dev
 - **GET /users**: Get all users.
 - **GET /users/:id**: Get user by ID.
 - **POST /users**: Create a new user.
-- **PUT /users/:id**: Update user by ID.
+- **PATCH /users/:id**: Update user by ID.
 - **DELETE /users/:id**: Delete user by ID.
