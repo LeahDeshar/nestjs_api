@@ -56,3 +56,6 @@ npm run start:dev
 - **POST /users**: Create a new user.
 - **PATCH /users/:id**: Update user by ID.
 - **DELETE /users/:id**: Delete user by ID.
+- **One to One Relationship**
+- **One to Many Relationship**
+- **Populating Fields**
