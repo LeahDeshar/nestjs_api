@@ -15,6 +15,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import mongoose from 'mongoose';
 import { UpdateUserDto } from 'src/dto/UpdateUser.dto';
+import { CreateLogin } from 'src/dto/CreateLogin.dto';
 
 @Controller('users')
 export class UsersController {
@@ -23,6 +24,13 @@ export class UsersController {
   @UsePipes(new ValidationPipe())
   createUser(@Body() createDtoUser: CreateUserDto) {
     return this.userService.createUser(createDtoUser);
+  }
+
+  // login
+  @Post('/login')
+  @UsePipes(new ValidationPipe())
+  login(@Body() createDtoLogin: CreateLogin) {
+    return this.userService.login(createDtoLogin);
   }
 
   @Get()
