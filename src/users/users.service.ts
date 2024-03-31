@@ -78,6 +78,13 @@ export class UsersService {
       expiresIn: '5h',
     });
   }
+  buildUserResponse(user: User) {
+    return {
+      name: user.name,
+      email: user.email,
+      token: this.generateToken(user),
+    };
+  }
 
   async findByEmail(email: string) {
     return await this.userModel.findOne({ email });

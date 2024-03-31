@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import mongoose from 'mongoose';
 import { UpdateUserDto } from 'src/dto/UpdateUser.dto';
 import { CreateLogin } from 'src/dto/CreateLogin.dto';
+import { ExpressRequest } from 'src/middleware/auth.middleware';
 
 @Controller('users')
 export class UsersController {
@@ -34,14 +36,19 @@ export class UsersController {
   }
 
   @Get()
-  getUsers() {
+  getUsers(@Request() request: ExpressRequest) {
+    if (!request.user) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    }
     return this.userService.getUsers();
   }
   // current user
   @Get('/current')
-  readCurrentUser(@Param('id', new ValidationPipe()) id: string) {
-    // return this.userService.readCurrentUser(id);
-    return '';
+  async readCurrentUser(@Request() request: ExpressRequest) {
+    if (!request.user) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+    }
+    return this.userService.buildUserResponse(request.user);
   }
 
   @Get(':id')
