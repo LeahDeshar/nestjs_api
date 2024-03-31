@@ -37,6 +37,12 @@ export class UsersController {
   getUsers() {
     return this.userService.getUsers();
   }
+  // current user
+  @Get('/current')
+  readCurrentUser(@Param('id', new ValidationPipe()) id: string) {
+    // return this.userService.readCurrentUser(id);
+    return '';
+  }
 
   @Get(':id')
   async getUserById(@Param('id') id: string) {

@@ -7,6 +7,7 @@ import { UpdateUserDto } from 'src/dto/UpdateUser.dto';
 import { User } from 'src/schemas/User.schema';
 import { UserSettings } from 'src/schemas/UserSettings.schema';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -46,7 +47,6 @@ export class UsersService {
     if (!user) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
-    console.log(user);
     const isPasswordValid = await bcrypt.compare(
       userDto.password,
       user.password,
@@ -54,17 +54,10 @@ export class UsersService {
     if (!isPasswordValid) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
-    return user;
-
-    // if (user && await bcrypt.compare(userDto.password, user.password)) {
-    //   const payload = { email: user.email, sub: user._id };
-    //   return {
-    //     access_token: this.jwtService.sign(payload),
-    //   };
-    // } else {
-    //   throw new UnauthorizedException();
-    // }
-    // }
+    return {
+      user,
+      token: this.generateToken(user),
+    };
   }
   getUsers() {
     return this.userModel.find().populate(['settings', 'posts']);
@@ -78,5 +71,15 @@ export class UsersService {
   }
   deleteUser(id: string) {
     return this.userModel.findByIdAndDelete(id);
+  }
+
+  generateToken(user: User) {
+    return jwt.sign({ email: user.email }, '123456', {
+      expiresIn: '5h',
+    });
+  }
+
+  async findByEmail(email: string) {
+    return await this.userModel.findOne({ email });
   }
 }
