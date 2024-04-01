@@ -19,7 +19,7 @@ This is a practical project created to learn how to build a RESTful API using Ne
 - Error handling and validation using built-in NestJS features.
 - Modular architecture for better organization and scalability.
 - Password hashing and JWT authentication implemented as middleware.
-- Cloudinary Image Upload
+- Cloudinary Image Upload and end points
 
 ## Prerequisites
 
@@ -61,3 +61,7 @@ npm run start:dev
 - **One to One Relationship**
 - **One to Many Relationship**
 - **Populating Fields**
+- **GET /images/all**: Get all images.
+- **GET /images/:id**: Get image by ID.
+- **POST /images/upload**: Upload a new images.
+- **DELETE /images/:id**: Delete images by ID.
