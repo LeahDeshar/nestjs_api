@@ -13,6 +13,7 @@ import { AuthMiddleware } from './middleware/auth.middleware';
 import { ImageController } from './image.controller';
 import { CloudinaryService } from './cloudinary.service';
 import { MulterModule } from '@nestjs/platform-express';
+import { User, UserSchema } from './schemas/User.schema';
 
 @Module({
   imports: [
@@ -24,6 +25,12 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.register({
       dest: './uploads',
     }),
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema: UserSchema,
+      },
+    ]),
   ],
   controllers: [AppController, ImageController],
   providers: [AppService, CloudinaryService],
