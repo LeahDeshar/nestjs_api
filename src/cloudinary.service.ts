@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as cloudinary from 'cloudinary';
-// import { User } from './schemas/User.schema';
 import { Image } from './schemas/Image.schema';
 import { Model } from 'mongoose';
 import { CreateImage } from './dto/CreateImage.dto';
@@ -14,43 +13,6 @@ export class CloudinaryService {
       api_secret: 'X0tF6zTCwcr9_1SmDTXdO1TO7I4',
     });
   }
-
-  //   async uploadImage(
-  //     filePath: string,
-  //   ): Promise<cloudinary.UploadApiResponse | cloudinary.UploadApiErrorResponse> {
-  //     return new Promise((resolve, reject) => {
-  //       cloudinary.v2.uploader.upload(
-  //         filePath,
-  //         { folder: 'images' },
-  //         (error, result) => {
-  //           if (error) {
-  //             reject(error);
-  //           }
-  //           resolve(result);
-  //         },
-  //       );
-  //     });
-  //   }
-  //   async uploadImage(
-  //     createImageDto: CreateImage,
-  //     filePath: string,
-  //   ): Promise<cloudinary.UploadApiResponse | cloudinary.UploadApiErrorResponse> {
-  //     try {
-  //       const cloudinaryResult =
-  //         await this.CloudinaryService.uploadImage(filePath);
-  //       const { public_id, url } = cloudinaryResult;
-
-  //       const newImage = new this.imageModel({
-  //         image: { public_id, url },
-  //         userId: createImageDto.userId._id, // Assuming userId is populated in createImageDto
-  //       });
-
-  //       return newImage.save();
-  //     } catch (error) {
-  //       throw new Error('Failed to upload image');
-  //     }
-  //   }
-
   async uploadImage(createImage: CreateImage) {
     try {
       const result = await cloudinary.v2.uploader.upload(
@@ -59,8 +21,6 @@ export class CloudinaryService {
           folder: 'images',
         },
       );
-
-      // Save image data to the database
       const image = new this.imageModel({
         image: { public_id: result.public_id, url: result.url },
         userId: createImage.userId,
@@ -69,7 +29,23 @@ export class CloudinaryService {
 
       return savedImage;
     } catch (error) {
-      throw new Error('Failed to upload image');
+      throw new Error(`'Failed to upload image' ${error}`);
     }
+  }
+
+  //   get all the image
+  async getAllImage() {
+    const images = await this.imageModel.find();
+    return images;
+  }
+
+  //   get image by id
+  async getById(id: string) {
+    return await this.imageModel.findById(id);
+  }
+
+  // delete the image
+  async deleteImage(id: string) {
+    return await this.imageModel.findByIdAndDelete(id);
   }
 }

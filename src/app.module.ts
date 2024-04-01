@@ -14,6 +14,7 @@ import { ImageController } from './image.controller';
 import { CloudinaryService } from './cloudinary.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { User, UserSchema } from './schemas/User.schema';
+import { Image, ImageSchema } from './schemas/Image.schema';
 
 @Module({
   imports: [
@@ -30,10 +31,23 @@ import { User, UserSchema } from './schemas/User.schema';
         name: User.name,
         schema: UserSchema,
       },
+      {
+        name: Image.name,
+        schema: ImageSchema,
+      },
     ]),
   ],
   controllers: [AppController, ImageController],
-  providers: [AppService, CloudinaryService],
+  providers: [
+    AppService,
+    CloudinaryService,
+    {
+      provide: 'Image',
+      useValue: MongooseModule.forFeature([
+        { name: Image.name, schema: ImageSchema },
+      ]),
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
