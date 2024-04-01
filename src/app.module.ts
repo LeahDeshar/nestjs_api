@@ -10,6 +10,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
+import { ImageController } from './image.controller';
+import { CloudinaryService } from './cloudinary.service';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -18,9 +21,12 @@ import { AuthMiddleware } from './middleware/auth.middleware';
     ),
     UsersModule,
     PostsModule,
+    MulterModule.register({
+      dest: './uploads',
+    }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ImageController],
+  providers: [AppService, CloudinaryService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
