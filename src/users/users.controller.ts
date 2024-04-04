@@ -57,6 +57,14 @@ export class UsersController {
   async sortData(@Query('field') field: string) {
     return this.userService.sortData(field);
   }
+  @Get('search')
+  searchUsers(@Query('query') query: string) {
+    return this.userService.searchUsers(query);
+  }
+  @Get('filter')
+  filterUsers(@Query() filters: any) {
+    return this.userService.filterUsers(filters);
+  }
   // current user
   @Get('/current')
   async readCurrentUser(@Request() request: ExpressRequest) {

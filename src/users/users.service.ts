@@ -112,12 +112,27 @@ export class UsersService {
     } catch (error) {
       throw new Error('Failed to sort users.');
     }
-    // const sortOrder = order === 1 ? '' : '-';
-    // const sortedData = await this.userModel
-    //   .find()
-    //   .sort(`${sortOrder}${field}`)
-    //   .exec();
-    // return sortedData;
+  }
+  async searchUsers(query: string) {
+    try {
+      const users = await this.userModel.find({
+        $or: [
+          { name: { $regex: query, $options: 'i' } },
+          // Add more fields to search here if needed
+        ],
+      });
+      return users;
+    } catch (error) {
+      throw new Error('Failed to search users.');
+    }
+  }
+  async filterUsers(filters: any) {
+    try {
+      const users = await this.userModel.find(filters);
+      return users;
+    } catch (error) {
+      throw new Error('Failed to filter users.');
+    }
   }
   async findByEmail(email: string) {
     return await this.userModel.findOne({ email });
