@@ -11,6 +11,7 @@ This is a practical project created to learn how to build a RESTful API using Ne
   - [Configuration](#configuration)
   - [Usage](#usage)
   - [Endpoints](#endpoints)
+    - [Images](#images)
 
 ## Features
 
@@ -20,6 +21,7 @@ This is a practical project created to learn how to build a RESTful API using Ne
 - Modular architecture for better organization and scalability.
 - Password hashing and JWT authentication implemented as middleware.
 - Cloudinary Image Upload and end points
+- Pagination,Searching and Filtering
 
 ## Prerequisites
 
@@ -58,9 +60,13 @@ npm run start:dev
 - **POST /users**: Create a new user.
 - **PATCH /users/:id**: Update user by ID.
 - **DELETE /users/:id**: Delete user by ID.
+- **Pagination /users/pages?page=1&limit=3**: Get page of users with pagination.
 - **One to One Relationship**
 - **One to Many Relationship**
 - **Populating Fields**
+
+  ### Images
+
 - **GET /images/all**: Get all images.
 - **GET /images/:id**: Get image by ID.
 - **POST /images/upload**: Upload a new images.

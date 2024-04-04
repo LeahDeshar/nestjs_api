@@ -78,12 +78,32 @@ export class UsersService {
       expiresIn: '5h',
     });
   }
+
   buildUserResponse(user: User) {
     return {
       name: user.name,
       email: user.email,
       token: this.generateToken(user),
     };
+  }
+
+  // pagination
+  // async paginate(page = 1, limit = 10) {
+  //   const users = await this.userModel
+  //     .find()
+  //     .limit(limit * 1)
+  //     .skip((page - 1) * limit)
+  //     .exec();
+  //   const count = await this.userModel.countDocuments();
+  //   return {
+  //     users,
+  //     totalPages: Math.ceil(count / limit),
+  //     currentPage: page,
+  //   };
+  // }
+  async pagination(page: number = 1, limit: number = 10): Promise<User[]> {
+    const skip = (page - 1) * limit;
+    return this.userModel.find().skip(skip).limit(limit).exec();
   }
 
   async findByEmail(email: string) {

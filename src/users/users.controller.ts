@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -8,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Request,
   UsePipes,
   ValidationPipe,
@@ -41,6 +43,14 @@ export class UsersController {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
     return this.userService.getUsers();
+  }
+
+  @Get('pages')
+  pagination(@Query('page') page: number, @Query('limit') limit: number) {
+    if (page < 1 || limit < 1) {
+      throw new BadRequestException('Invalid pagination parameters');
+    }
+    return this.userService.pagination(page, limit);
   }
   // current user
   @Get('/current')
