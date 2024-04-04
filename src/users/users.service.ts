@@ -105,7 +105,20 @@ export class UsersService {
     const skip = (page - 1) * limit;
     return this.userModel.find().skip(skip).limit(limit).exec();
   }
-
+  async sortData(field: string) {
+    try {
+      const users = await this.userModel.find().sort(field);
+      return users;
+    } catch (error) {
+      throw new Error('Failed to sort users.');
+    }
+    // const sortOrder = order === 1 ? '' : '-';
+    // const sortedData = await this.userModel
+    //   .find()
+    //   .sort(`${sortOrder}${field}`)
+    //   .exec();
+    // return sortedData;
+  }
   async findByEmail(email: string) {
     return await this.userModel.findOne({ email });
   }

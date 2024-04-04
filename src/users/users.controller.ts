@@ -52,6 +52,11 @@ export class UsersController {
     }
     return this.userService.pagination(page, limit);
   }
+
+  @Get('sort')
+  async sortData(@Query('field') field: string) {
+    return this.userService.sortData(field);
+  }
   // current user
   @Get('/current')
   async readCurrentUser(@Request() request: ExpressRequest) {
