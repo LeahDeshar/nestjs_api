@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Request } from 'express';
 import { Observable } from 'rxjs';
+import { ExpressRequest } from 'src/middleware/auth.middleware';
 
 @Injectable()
 export class AuthGaurd implements CanActivate {
@@ -8,8 +8,10 @@ export class AuthGaurd implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     console.log('AuthGaurd');
-    const request = context.switchToHttp().getRequest<Request>();
-    return true;
+    const request = context.switchToHttp().getRequest<ExpressRequest>();
+
+    if (request.user) return true;
+    else return false;
     // return request.isAuthenticated();
   }
 }

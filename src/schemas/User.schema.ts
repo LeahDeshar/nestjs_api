@@ -20,6 +20,9 @@ export class User {
   @Prop({ required: false })
   avatarUrl?: string;
 
+  @Prop({ enum: ['admin', 'user'], default: 'user' })
+  role?: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'UserSettings' })
   settings?: UserSettings;
 

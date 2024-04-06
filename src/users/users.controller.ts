@@ -11,6 +11,7 @@ import {
   Post,
   Query,
   Request,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -20,6 +21,9 @@ import mongoose from 'mongoose';
 import { UpdateUserDto } from 'src/dto/UpdateUser.dto';
 import { CreateLogin } from 'src/dto/CreateLogin.dto';
 import { ExpressRequest } from 'src/middleware/auth.middleware';
+import { AuthGaurd } from 'src/guards/auth.guard';
+import { RoleGaurd } from 'src/guards/role.guard';
+import { Roles } from 'src/decorator/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -38,6 +42,8 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(RoleGaurd)
+  @Roles(['user'])
   getUsers(@Request() request: ExpressRequest) {
     if (!request.user) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
