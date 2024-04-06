@@ -12,6 +12,7 @@ This is a practical project created to learn how to build a RESTful API using Ne
   - [Usage](#usage)
   - [Endpoints](#endpoints)
     - [Images](#images)
+- [Guards and Custom decorator](#guards-and-custom-decorator)
 
 ## Features
 
@@ -22,6 +23,7 @@ This is a practical project created to learn how to build a RESTful API using Ne
 - Password hashing and JWT authentication implemented as middleware.
 - Cloudinary Image Upload and end points
 - Pagination,Searching by query and Filtering
+- Guards and custom decorator for authentication and role base access control.
 
 ## Prerequisites
 
@@ -71,3 +73,9 @@ npm run start:dev
 - **GET /images/:id**: Get image by ID.
 - **POST /images/upload**: Upload a new images.
 - **DELETE /images/:id**: Delete images by ID.
+
+# Guards and Custom decorator
+
+In this project, we have implemented guards for routes that require authentication (`@UseGuards(AuthGuard)`) and custom decorators
+
+Guard is a mechanism that allows you to control access to routes, components, or even entire modules based on specific conditions.

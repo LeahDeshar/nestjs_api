@@ -15,6 +15,8 @@ import { CloudinaryService } from './cloudinary.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { User, UserSchema } from './schemas/User.schema';
 import { Image, ImageSchema } from './schemas/Image.schema';
+import { EmployeeModule } from './employee/employee.module';
+import { Employee, EmployeeSchema } from './employee/entities/employee.scheme';
 
 @Module({
   imports: [
@@ -35,7 +37,12 @@ import { Image, ImageSchema } from './schemas/Image.schema';
         name: Image.name,
         schema: ImageSchema,
       },
+      {
+        name: Employee.name,
+        schema: EmployeeSchema,
+      },
     ]),
+    EmployeeModule,
   ],
   controllers: [AppController, ImageController],
   providers: [
